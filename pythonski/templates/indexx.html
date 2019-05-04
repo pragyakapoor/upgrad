@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Penguin Market</title>
+    <script src="https://smtpjs.com/v3/smtp.js">
+    </script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    
+
+</head>
+<body>
+    <script>
+        function myfunc(name,price) {
+            var email= prompt("Please enter your E-Mail ID")
+            Email.send({
+    Host : "smtp.gmail.com",
+    Username : "onlineshoppingpenguin@gmail.com",
+    Password : "likhith123",
+    To : email,
+    From : "onlineshoppingpenguin@gmail.com",
+    Subject : "Interest in: " + name,
+    Body : "Thank you for showing interest in "+ name+". The item is on sale for INR" + price
+}).then(
+  message => alert(message)
+);
+        }
+        </script>
+    <!-- NAVBAR START -->
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div class="container-fluid">
+        <a class="navbar-brand" href="#">Penguin Market</a>
+        <form class="navbar-form" action="{{ url_for('form') }}" method="POST">
+            <div class="form-group input-group">
+                {{form.csrf_token}}
+                <div>{{ form.product() }}
+                <span class="input-group-addon"><button type="submit" class="btn btn-danger">Search</button></span> </div>
+            </div>
+
+        </form>
+    </div>
+    </nav>
+        
+    <!-- NAVBAR END -->
+
+
+
+
+
+    {% for product in products %}
+    <section>
+            <div class="container py-3">
+              <div class="card">
+                <div class="row ">
+                  <div class="col-md-4">
+                      <img src="{{ product.imageURL }}"  style="width: 200px; height: 200px;">
+                    </div>
+                    <div class="col-md-8 px-3">
+                      <div class="card-block px-3">
+                        <h4 class="card-title">{{ product.name }}</h4>
+                        <p class="card-text">{{ product.description }}</p>
+                        <p class="card-text">{{ product.price }}</p>
+                        <a class="btn btn-info" onclick="myfunc(' {{ product.name }} ',' {{ product.price }} ')" >I am Interested</a>
+                      </div>
+                    </div>
+          
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        {% endfor %}
+        
+</body>
+</html>
